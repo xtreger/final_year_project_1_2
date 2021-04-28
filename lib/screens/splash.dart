@@ -1,3 +1,4 @@
+import 'package:final_year_project_1_2/screens/nav/bottom-nav.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_firebase_auth/lit_firebase_auth.dart';
 import 'package:final_year_project_1_2/screens/home.dart';
@@ -10,12 +11,13 @@ class SplashScreen extends StatelessWidget {
         builder: (context) => const SplashScreen(),
       );
 
+
   @override
   Widget build(BuildContext context) {
     final user = context.watchSignedInUser();
     user.map(
       (value) {
-        _navigateToHomeScreen(context);
+        _navigateToBottomNav(context);
       },
       empty: (_) {
         _navigateToAuthScreen(context);
@@ -39,6 +41,12 @@ class SplashScreen extends StatelessWidget {
   void _navigateToHomeScreen(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Navigator.of(context).pushReplacement(HomeScreen.route),
+    );
+  }
+
+  void _navigateToBottomNav(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Navigator.of(context).pushReplacement(BottomNav.route),
     );
   }
 }

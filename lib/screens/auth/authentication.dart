@@ -3,7 +3,7 @@ import 'package:final_year_project_1_2/config/palette.dart';
 import 'package:final_year_project_1_2/screens/auth/register.dart';
 import 'package:final_year_project_1_2/screens/auth/signIn.dart';
 import 'package:final_year_project_1_2/screens/backgroundPainter.dart';
-import 'package:final_year_project_1_2/screens/home.dart';
+import 'package:final_year_project_1_2/screens/nav/bottom-nav.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_firebase_auth/lit_firebase_auth.dart';
 
@@ -50,7 +50,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
           ),
         ),
         onAuthSuccess: () {
-          Navigator.of(context).pushReplacement(HomeScreen.route);
+          Navigator.of(context).pushReplacement(BottomNav.route);
         },
         child: Stack(
           children: [

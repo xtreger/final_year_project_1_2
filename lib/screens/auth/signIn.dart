@@ -1,8 +1,6 @@
-import 'package:final_year_project_1_2/config/palette.dart';
 import 'package:final_year_project_1_2/screens/auth/decorations.dart';
 import 'package:final_year_project_1_2/screens/auth/signInUpBar.dart';
-import 'package:final_year_project_1_2/screens/auth/title.dart';
-import 'package:final_year_project_1_2/screens/auth/widgets/providerButton.dart';
+import 'package:final_year_project_1_2/config/title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_firebase_auth/lit_firebase_auth.dart';
@@ -19,12 +17,12 @@ class SignIn extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(
-            children: [
+          children: [
             Expanded(
                 flex: 3,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: LoginTitle(title: 'Welcome\nBack'),
+                  child: LoginTitle(title: 'Safe\nParcel.'),
                 )),
             Expanded(
                 flex: 4,
@@ -39,7 +37,7 @@ class SignIn extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: PasswordTextFormField(
                           decoration:
-                              signInInputDecoration(hintText: 'Password')),
+                          signInInputDecoration(hintText: 'Password')),
                     ),
                     SignInBar(
                       isLoading: isSubmitting,
@@ -47,65 +45,31 @@ class SignIn extends StatelessWidget {
                       onPressed: () {
                         context.signInWithEmailAndPassword();
                       },
-                    )
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                            splashColor: Colors.white,
+                            onTap: () {
+                              onRegisterClicked?.call();
+                            },
+                            child: RichText(
+                              text: const TextSpan(
+                                text: "Don't have an account? ",
+                                style: TextStyle(color: Colors.black54),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'SIGN UP',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ))),
                   ],
                 )),
-            Expanded(
-              flex: 2,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  children: [
-                    const Text(
-                      "or sign in with",
-                      style: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 9.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ProviderButton(
-                          context: context,
-                          signInType: "google",
-                        ),
-                        ProviderButton(
-                          context: context,
-                          signInType: "apple",
-                        ),
-                        ProviderButton(
-                          context: context,
-                          signInType: "twitter",
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    InkWell(
-                        splashColor: Colors.white,
-                        onTap: () {
-                          onRegisterClicked?.call();
-                        },
-                        child: RichText(
-                          text: const TextSpan(
-                            text: "Don't have an account? ",
-                            style: TextStyle(color: Colors.black54),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'SIGN UP',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
-              ),
-            )
+
           ],
         ),
       ),

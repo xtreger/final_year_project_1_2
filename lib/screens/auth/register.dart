@@ -1,9 +1,8 @@
 import 'package:final_year_project_1_2/screens/auth/signInUpBar.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_firebase_auth/lit_firebase_auth.dart';
-
 import 'decorations.dart';
-import 'title.dart';
+import '../../config/title.dart';
 
 class Register extends StatelessWidget {
   const Register({Key key, this.onSignInPressed}) : super(key: key);
@@ -61,19 +60,24 @@ class Register extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {
-                        onSignInPressed?.call();
-                      },
-                      child: const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
+                        splashColor: Colors.white,
+                        onTap: () {
+                          onSignInPressed?.call();
+                        },
+                        child: RichText(
+                          text: const TextSpan(
+                            text: "",
+                            style: TextStyle(color: Colors.white),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'SIGN IN ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        )),
                   ),
                 ],
               ),
