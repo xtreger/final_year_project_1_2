@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(
                 brightness: Brightness.dark, color: Palette.dark)),
         home: SplashScreen(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:final_year_project_1_2/config/palette.dart';
 import 'package:flutter/material.dart';
 
 class AppBarText extends StatelessWidget {
@@ -10,7 +11,7 @@ class AppBarText extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        color: Colors.white,
+        color: Palette.cobalt,
         fontWeight: FontWeight.w400,
         fontSize: 20,
       ),

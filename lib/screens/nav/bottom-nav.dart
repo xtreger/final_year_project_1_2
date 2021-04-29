@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:final_year_project_1_2/screens/home.dart';
 import 'package:final_year_project_1_2/config/palette.dart';
-import 'package:final_year_project_1_2/screens/profile/profile.dart';
+import 'package:final_year_project_1_2/screens/settings/settings.dart';
+import 'package:final_year_project_1_2/screens/history/history.dart';
 
 class BottomNav extends StatefulWidget {
 
@@ -20,27 +21,49 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   List<Widget> widgetOptions = <Widget>[
     HomeScreen(),
-    Text("messages"),
-    Profile(),
+    History(),
+    Settings(),
 
   ];
+
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void _onItemTap(int index){
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
   }
 
   @override
-  void initState(){
-    super.initState();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widgetOptions.elementAt(_selectedIndex),
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _selectedIndex = index);
+          },
+          children: <Widget>[
+            HomeScreen(),
+            History(),
+            Settings(),
+          ],
+        ),
+      ),
       bottomNavigationBar:
           BottomNavigationBar(items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -48,13 +71,13 @@ class _BottomNavState extends State<BottomNav> {
                 label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.message_rounded),
-                label: "Message"),
+                label: "History"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_rounded),
-                label: "Profile"),
+                icon: Icon(Icons.settings_rounded),
+                label: "Settings"),
           ],
           currentIndex: _selectedIndex,
-          fixedColor: Palette.dark,
+          fixedColor: Palette.cobalt,
           unselectedItemColor: Palette.light,
           onTap: _onItemTap),
     );

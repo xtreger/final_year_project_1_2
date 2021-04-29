@@ -50,6 +50,16 @@ class Register extends StatelessWidget {
                       decoration: registerInputDecoration(hintText: 'Password'),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: PasswordTextFormField(
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      decoration: registerInputDecoration(hintText: 'Repeat Password'),
+                    ),
+                  ),
                   SignUpBar(
                     label: 'Sign up',
                     isLoading: isSubmitting,
