@@ -27,11 +27,6 @@ dependencies:
   flutter_vlc_player: ^0.0.2
   flutter_spinkit: ^5.0.0
   flushbar: ^1.10.4
-
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   lit_firebase_auth: ^0.2.3
   firebase_core: ^0.4.0+9
