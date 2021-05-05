@@ -5,7 +5,6 @@ import 'package:final_year_project_1_2/config/appbartext.dart';
 import 'package:final_year_project_1_2/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/vlc_player.dart';
 import 'package:flutter_vlc_player/vlc_player_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -48,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     inputData();
-    int motion = _getMotion() as int;
+    String motion = _getMotion().toString();
     _incrementCounter();
     _vlcPlayerController = new VlcPlayerController();
     WidgetsBinding.instance.addPostFrameCallback((_) => _incrementCounter());
@@ -56,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _incrementCounter() {
     setState(() {
-      SystemChrome.setEnabledSystemUIOverlays([]);
       getStreamID();
       getLockID();
     });
@@ -123,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         snapshot.documents.forEach((element) {
           _userID == element['userID']
-              ? _lockUrl = "http://192.168.0.11/?" + element.data['lockID']
+              ? _lockUrl = "http://192.168.0.11?" + element.data['lockID']
               : _waitLock = true;
         });
       });

@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
     return LitAuthInit(
-
       authProviders: const AuthProviders(
         emailAndPassword: true,
         google: true,

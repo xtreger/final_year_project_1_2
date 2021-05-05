@@ -1,25 +1,26 @@
+import 'dart:convert';
+
 import 'package:final_year_project_1_2/config/appbartext.dart';
 import 'package:final_year_project_1_2/config/palette.dart';
 import 'package:final_year_project_1_2/screens/auth/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_firebase_auth/lit_firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 class Settings extends StatefulWidget {
   const Settings({Key key}) : super(key: key);
 
-
   static MaterialPageRoute get route => MaterialPageRoute(
-    builder: (context) => const Settings(),
-  );
-
+        builder: (context) => const Settings(),
+      );
 
   @override
   _SettingsState createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
-
   double value = 500;
+  double value2 = 1;
 
   @override
   void initState() {
@@ -52,7 +53,8 @@ class _SettingsState extends State<Settings> {
                         ),
                         title: Text('Motion Sensitivity',
                             style: const TextStyle(color: Colors.white)),
-                        subtitle: Text("You can adjust the motion sensor sensitivity by draggin the slider below, the higher it is the less motion it will detect.",
+                        subtitle: Text(
+                            "You can adjust the motion sensor sensitivity by draggin the slider below, the higher it is the less motion it will detect.",
                             style: const TextStyle(color: Colors.white60))),
                   ],
                 ),
@@ -60,58 +62,66 @@ class _SettingsState extends State<Settings> {
           Slider(
             value: value,
             min: 0,
-            max: 1000,
+            max: 5000,
             divisions: 1000,
             activeColor: Palette.cobalt,
             inactiveColor: Palette.cobaltShade,
             label: value.round().toString(),
             onChanged: (value) => setState(() => this.value = value),
-
           ),
           Container(
-              margin: const EdgeInsets.only(
-                  left: 5.0, right: 5.0, bottom: 10),
+              margin: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 10),
               child: Material(
                   child: Container(
-                    margin: const EdgeInsets.only(
-                        top: 10.0,
-                        left: 40.0,
-                        right: 40.0,
-                        bottom: 20.0),
-                    // ignore: deprecated_member_use
-                    child: RaisedButton(
+                margin: const EdgeInsets.only(
+                    top: 10.0, left: 40.0, right: 40.0, bottom: 20.0),
+                // ignore: deprecated_member_use
+                child: value2 != value
+                    ? RaisedButton(
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(20.0)),
+                            borderRadius: BorderRadius.circular(20.0)),
                         highlightElevation: 5.0,
                         hoverColor: Colors.white,
                         color: Palette.cobalt,
                         onPressed: () {
+                          createAlbum();
+                          setState(() => this.value2 = this.value);
                         },
                         child: const Text('Set Sensitivity',
-                            style: const TextStyle(
-                                color: Colors.white))),
-                  )
-              ))
+                            style: const TextStyle(color: Colors.white)))
+                    : Container(),
+              )))
         ],
       ),
       floatingActionButton: Builder(
         builder: (BuildContext context) {
-            return FloatingActionButton.extended(
-                onPressed: () async {
-                  context.signOut();
-                  Navigator.of(context).pushReplacement(AuthenticationScreen.route);
-                  super.dispose();
-                },
-                backgroundColor: Colors.redAccent,
-                label: const Text(
-                  "Logout",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                icon: const Icon(Icons.logout, color: Colors.white));
+          return FloatingActionButton.extended(
+              onPressed: () async {
+                context.signOut();
+                Navigator.of(context)
+                    .pushReplacement(AuthenticationScreen.route);
+                super.dispose();
+              },
+              backgroundColor: Colors.redAccent,
+              label: const Text(
+                "Logout",
+                style: const TextStyle(color: Colors.white),
+              ),
+              icon: const Icon(Icons.logout, color: Colors.white));
         },
       ),
     );
   }
-}
 
+  Future<http.Response> createAlbum() {
+    return http.post(
+      Uri.parse('http://192.168.0.115:5000/setMotion'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, int>{
+        'motionValue': value.toInt(),
+      }),
+    );
+  }
+}
